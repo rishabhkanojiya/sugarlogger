@@ -11,9 +11,32 @@ const Comment = (props) => {
       ?.filter((cmt) => cmt.postId === post.id)
       .map(({ id, body, user }) => {
         return (
-          <p key={id}>
-            <b>{user}</b> : {body}
-          </p>
+          <div key={id} className="flex items-center justify-between">
+            <div className="pr-2">
+              <b>{user}</b> : {body}
+            </div>
+            <div
+              className="flex"
+              onClick={() => {
+                handleDelete(id);
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+            </div>
+          </div>
         );
       });
 
@@ -22,9 +45,9 @@ const Comment = (props) => {
     }
     return (
       <div className="p-3 px-5">
-        <p className="text-sm font-thin pb-1">
+        <div className="text-sm font-thin pb-1">
           All Comments ({commentsMarkup?.length})
-        </p>
+        </div>
         {commentsMarkup}
       </div>
     );
@@ -44,11 +67,20 @@ const Comment = (props) => {
       params,
       (resp) => {
         console.log(resp);
+        setCommentIp("");
       },
       (err) => {
         console.log(err);
       }
     );
+  };
+
+  const handleDelete = (id) => {
+    const { commetsParams, post } = props;
+    const { deleteComment } = commetsParams;
+
+    deleteComment({ id });
+    //
   };
 
   return (
@@ -72,6 +104,7 @@ const Comment = (props) => {
               e.preventDefault();
               setCommentIp(e.target.value);
             }}
+            value={commentIp}
             className="shadow rounded-2xl appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100"
             type="text"
             placeholder="Write your comment here"

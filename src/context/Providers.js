@@ -60,6 +60,30 @@ export const PostContextProvider = (props) => {
     );
   };
 
+  const deleteComment = (paramsObj, cb, err) => {
+    let apiParams = {
+      url: GET_COMMENT_API + `/${paramsObj.id}`,
+      method: "delete",
+      name: "Get Comments",
+      // data: paramsObj,
+    };
+    getData(
+      apiParams,
+      (resp) => {
+        setComments(comments.filter((a) => a.id !== paramsObj.id));
+
+        if (cb) {
+          cb(resp.data);
+        }
+      },
+      (error) => {
+        if (err) {
+          err(error);
+        }
+      }
+    );
+  };
+
   const addComment = (paramsObj, cb, err) => {
     let apiParams = {
       url: POST_COMMENT_API,
@@ -146,6 +170,7 @@ export const PostContextProvider = (props) => {
         getReaction,
         isLoading,
         setIsLoading,
+        deleteComment,
       }}
     >
       {props.children}

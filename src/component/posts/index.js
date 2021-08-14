@@ -6,8 +6,7 @@ import Post from "./Post";
 
 const Posts = (props) => {
   useEffect(() => {
-    const { getPosts, getComment, getReaction, isLoading, setIsLoading } =
-      props.postData;
+    const { getPosts, getComment, getReaction } = props.postData;
 
     getPosts(
       {},
@@ -38,6 +37,7 @@ const Posts = (props) => {
     let commetsParams = {
       comments: postData.comments,
       addComment: postData.addComment,
+      deleteComment: postData.deleteComment,
     };
 
     let reactionsParams = {

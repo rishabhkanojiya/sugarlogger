@@ -1,11 +1,10 @@
 import React, { Fragment } from "react";
 import actions from "../../constant/actions";
-import config from "../../constant/config";
 
 const Reactions = (props) => {
   const renderReactions = () => {
     const { post, reactionsParams } = props;
-    const { reactions, addReaction } = reactionsParams;
+    const { reactions } = reactionsParams;
 
     const tempReactions = reactions?.filter((rec) => rec.postId === post.id);
 
