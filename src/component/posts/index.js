@@ -6,11 +6,20 @@ import Post from "./Post";
 
 const Posts = (props) => {
   useEffect(() => {
-    const { getPosts, getComment } = props.postData;
+    const { getPosts, getComment, getReaction, isLoading, setIsLoading } =
+      props.postData;
+
     getPosts(
       {},
       (resp) => {
         getComment(
+          {},
+          (resp) => {},
+          (err) => {
+            console.log(err);
+          }
+        );
+        getReaction(
           {},
           (resp) => {},
           (err) => {
@@ -32,8 +41,8 @@ const Posts = (props) => {
     };
 
     let reactionsParams = {
-      comments: postData.reactions,
-      addComment: postData.setReactions,
+      reactions: postData.reactions,
+      addReaction: postData.addReaction,
     };
 
     return postData.posts.map((post, index) => {
@@ -49,7 +58,7 @@ const Posts = (props) => {
 
   const { postData } = props;
 
-  if (!postData.posts?.length) {
+  if (!postData.reactions?.length) {
     return <Loader />;
   }
 

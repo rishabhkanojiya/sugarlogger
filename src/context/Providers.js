@@ -5,12 +5,14 @@ import {
   GET_COMMENT_API,
   GET_POST_API,
   POST_COMMENT_API,
+  REACTION_API,
 } from "../constant/apiUrl";
 
 export const PostContextProvider = (props) => {
   const [posts, setPosts] = useState(null);
   const [comments, setComments] = useState(null);
   const [reactions, setReactions] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getPosts = (paramsObj, cb, err) => {
     let apiParams = {
@@ -81,6 +83,55 @@ export const PostContextProvider = (props) => {
       }
     );
   };
+
+  const getReaction = (paramsObj, cb, err) => {
+    let apiParams = {
+      url: REACTION_API,
+      method: "GET",
+      name: "Get Reactions",
+      params: paramsObj,
+    };
+
+    getData(
+      apiParams,
+      (resp) => {
+        setReactions(resp.data);
+        if (cb) {
+          cb(resp.data);
+        }
+      },
+      (error) => {
+        if (err) {
+          err(error);
+        }
+      }
+    );
+  };
+
+  const addReaction = (paramsObj, cb, err) => {
+    let apiParams = {
+      url: REACTION_API,
+      method: "POST",
+      name: "add Reactions",
+      data: paramsObj,
+    };
+
+    getData(
+      apiParams,
+      (resp) => {
+        setReactions([...reactions, resp.data]);
+        if (cb) {
+          cb(resp.data);
+        }
+      },
+      (error) => {
+        if (err) {
+          err(error);
+        }
+      }
+    );
+  };
+
   return (
     <PostContext.Provider
       value={{
@@ -91,6 +142,10 @@ export const PostContextProvider = (props) => {
         addComment,
         reactions,
         setReactions,
+        addReaction,
+        getReaction,
+        isLoading,
+        setIsLoading,
       }}
     >
       {props.children}

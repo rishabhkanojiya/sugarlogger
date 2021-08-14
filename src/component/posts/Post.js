@@ -15,13 +15,15 @@ const Post = (props) => {
   const postActionProp = {
     isShow,
     setIsShow,
+    reactionsParams,
+    post,
   };
 
   return (
     <Fragment key={post.id}>
       <div className="mcard rounded-2xl my-2 mx-3  h-auto  shadow-2xl">
         <MainImage post={post} />
-        {isShow.reactions ? <Reactions {...props} /> : <Fragment />}
+        <Reactions {...props} />
 
         <PostActions {...postActionProp} />
         {isShow.comments ? <Comment {...props} /> : <Fragment />}

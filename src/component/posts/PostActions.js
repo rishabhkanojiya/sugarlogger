@@ -1,20 +1,37 @@
 import React, { Fragment, useState } from "react";
 import sprite from "../../assets/icons/sprite.svg";
-import ClapImg from "../../assets/icons/clap.png";
-import HeartImg from "../../assets/icons/heart.png";
-import Heart2Img from "../../assets/icons/heart2.png";
-import Thumbs from "../../assets/icons/thumbs.png";
 import config from "../../constant/config";
 
 const PostActions = (props) => {
   const [showActions, setShowActions] = useState(false);
 
+  const handleRecSubmit = (id) => {
+    const { reactionsParams, post } = props;
+    const { addReaction } = reactionsParams;
+
+    let params = {
+      reactionId: id,
+      postId: post.id,
+    };
+
+    addReaction(params);
+  };
   const renderActions = () => {
-    if (true) {
+    if (showActions) {
       return (
         <div className="tooltiptext flex justify-center">
           {config.reactionImages.map(({ id, url, name, alt }) => {
-            return <img key={id} className="iconsR" src={url} alt={alt}></img>;
+            return (
+              <img
+                onClick={(e) => {
+                  handleRecSubmit(id);
+                }}
+                key={id}
+                className="iconsR"
+                src={url}
+                alt={alt}
+              ></img>
+            );
           })}
         </div>
       );

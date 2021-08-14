@@ -7,7 +7,7 @@ config.reactionImages = [
     id: 1,
     url: "https://www.userflow.nl/images/Linkedin-Like-Icon-Thumbup250.png",
     alt: "thumbs",
-    name: "Licked",
+    name: "Liked",
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ config.reactionImages = [
     name: "Supported",
   },
   {
-    id: 5,
+    id: 4,
     url: "https://www.userflow.nl/images/Linkedin-Love-Icon-Heart250.png",
     alt: "heart",
     name: "Loved",
