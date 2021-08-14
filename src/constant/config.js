@@ -1,6 +1,6 @@
 let config = {};
 
-config.BASE_API = "http://localhost:3000/";
+config.BASE_API = "https://json-server-data75.herokuapp.com/";
 
 config.reactionImages = [
   {
