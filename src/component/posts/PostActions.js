@@ -25,6 +25,7 @@ const PostActions = (props) => {
               <img
                 onClick={(e) => {
                   handleRecSubmit(id);
+                  setShowActions(false);
                 }}
                 key={id}
                 className="iconsR"
@@ -47,11 +48,7 @@ const PostActions = (props) => {
       {/* <div className="flex p-2 m-2">{renderActions()}</div> */}
 
       <div className="flex p-2 m-2 ">
-        <div
-          className="tooltip"
-          onMouseEnter={() => setShowActions(true)}
-          onMouseLeave={() => setShowActions(false)}
-        >
+        <div className="tooltip" onClick={() => setShowActions(!showActions)}>
           {renderActions()}
           <div className="pr-3">
             <svg className="h-6 w-6">

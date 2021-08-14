@@ -73,3 +73,7 @@
   width: 15px;
   cursor: pointer;
 }
+
+body {
+  background: url(./assets/bg/topography.svg);
+}
