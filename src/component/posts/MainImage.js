@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 
 const MainImage = (props) => {
-  const { author, desc, id, url } = props?.post;
+  const { author, desc, url } = props?.post;
   return (
     <Fragment>
       <div className="p-3 font-bold">{author}</div>

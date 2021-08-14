@@ -10,7 +10,7 @@ const Post = (props) => {
     comments: false,
   });
 
-  const { post, commetsParams, reactionsParams } = props;
+  const { post, reactionsParams } = props;
 
   const postActionProp = {
     isShow,

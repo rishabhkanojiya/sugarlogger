@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 
 const Comment = (props) => {
   const [commentIp, setCommentIp] = useState("");
@@ -76,7 +76,7 @@ const Comment = (props) => {
   };
 
   const handleDelete = (id) => {
-    const { commetsParams, post } = props;
+    const { commetsParams } = props;
     const { deleteComment } = commetsParams;
 
     deleteComment({ id });
