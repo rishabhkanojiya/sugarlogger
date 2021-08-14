@@ -1,10 +1,10 @@
 import React from "react";
-import Post from "./component/post";
+import Posts from "./component/posts";
 
 const App = () => {
   return (
     <div className="container mx-auto my-5 ">
-      <Post />
+      <Posts />
     </div>
   );
 };

@@ -2,20 +2,21 @@ import React, { Fragment, useEffect } from "react";
 import { PostContext } from "../../context";
 import { Consume } from "../../context/Consumer";
 import Loader from "../Loader";
-import Comment from "./Comment";
-import MainImage from "./MainImage";
-import PostActions from "./PostActions";
-import Reactions from "./Reactions";
+import Post from "./Post";
 
-const Post = (props) => {
+const Posts = (props) => {
   useEffect(() => {
-    const { postData } = props;
-    const { getPosts } = postData;
-
+    const { getPosts, getComment } = props.postData;
     getPosts(
       {},
       (resp) => {
-        console.log(resp);
+        getComment(
+          {},
+          (resp) => {},
+          (err) => {
+            console.log(err);
+          }
+        );
       },
       (err) => {
         console.log(err);
@@ -25,23 +26,22 @@ const Post = (props) => {
 
   const renderRows = () => {
     const { postData } = props;
-    return postData.posts.map((post, index) => {
-      let postParams = { post };
+    let commetsParams = {
+      comments: postData.comments,
+    };
 
-      return (
-        <Fragment key={index}>
-          <div className="mcard rounded-2xl my-2 mx-3  h-auto  shadow-2xl">
-            <MainImage {...postParams} />
-            <Reactions />
-            <PostActions />
-            <Comment />
-          </div>
-        </Fragment>
-      );
+    return postData.posts.map((post, index) => {
+      let postParams = {
+        post,
+        commetsParams,
+      };
+
+      return <Post key={post.id} {...postParams} />;
     });
   };
 
   const { postData } = props;
+
   if (!postData.posts?.length) {
     return <Loader />;
   }
@@ -55,4 +55,4 @@ const Post = (props) => {
   );
 };
 
-export default Consume(Post, [PostContext]);
+export default Consume(Posts, [PostContext]);
