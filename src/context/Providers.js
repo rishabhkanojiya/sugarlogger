@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { PostContext } from ".";
 import { getData } from "../constant/actions";
-import { GET_COMMENT_API, GET_POST_API } from "../constant/apiUrl";
+import {
+  GET_COMMENT_API,
+  GET_POST_API,
+  POST_COMMENT_API,
+} from "../constant/apiUrl";
 
 export const PostContextProvider = (props) => {
   const [posts, setPosts] = useState(null);
   const [comments, setComments] = useState(null);
+  const [reactions, setReactions] = useState(null);
 
   const getPosts = (paramsObj, cb, err) => {
     let apiParams = {
@@ -55,15 +60,16 @@ export const PostContextProvider = (props) => {
 
   const addComment = (paramsObj, cb, err) => {
     let apiParams = {
-      url: GET_POST_API,
+      url: POST_COMMENT_API,
       method: "POST",
       name: "add Comments",
-      params: paramsObj,
+      data: paramsObj,
     };
+
     getData(
       apiParams,
       (resp) => {
-        setPosts(resp.data);
+        setComments([...comments, resp.data]);
         if (cb) {
           cb(resp.data);
         }
@@ -82,6 +88,9 @@ export const PostContextProvider = (props) => {
         comments,
         getPosts,
         getComment,
+        addComment,
+        reactions,
+        setReactions,
       }}
     >
       {props.children}

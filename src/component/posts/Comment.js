@@ -1,6 +1,8 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 const Comment = (props) => {
+  const [commentIp, setCommentIp] = useState("");
+
   const renderComments = () => {
     const { commetsParams, post } = props;
     const { comments } = commetsParams;
@@ -9,13 +11,11 @@ const Comment = (props) => {
       ?.filter((cmt) => cmt.postId === post.id)
       .map(({ id, body, user }) => {
         return (
-          <p>
+          <p key={id}>
             <b>{user}</b> : {body}
           </p>
         );
       });
-
-    // if (post.id === postId) {
 
     if (!commentsMarkup?.length) {
       return <Fragment />;
@@ -30,32 +30,62 @@ const Comment = (props) => {
     );
   };
 
+  const handleSubmit = (e) => {
+    const { commetsParams, post } = props;
+    const { addComment } = commetsParams;
+
+    let params = {
+      body: commentIp,
+      user: "random",
+      postId: post.id,
+    };
+
+    addComment(
+      params,
+      (resp) => {
+        console.log(resp);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  };
+
   return (
     <Fragment>
       {renderComments()}
 
-      <div className="pb-3 px-5 flex items-center">
-        <div className="mb-4 flex-grow">
+      <form
+        className="pb-3 px-5 flex items-center"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(e);
+        }}
+      >
+        <div className="mb-4 flex-grow" id="comment">
           <label
             className="block text-gray-700 text-sm font-bold mb-2 "
             htmlFor="comment"
           ></label>
           <input
+            onChange={(e) => {
+              e.preventDefault();
+              setCommentIp(e.target.value);
+            }}
             className="shadow rounded-2xl appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100"
-            id="comment"
             type="text"
             placeholder="Write your comment here"
           />
         </div>
-        <div className="mb-2">
-          <button
-            className="shadow ml-4 rounded-2xl bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 "
-            type="button"
-          >
-            Submit
-          </button>
-        </div>
-      </div>
+        {/* <div className="> */}
+        <button
+          className=" mb-2 shadow ml-4 rounded-2xl bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 "
+          type="submit"
+        >
+          Submit
+        </button>
+        {/* </div> */}
+      </form>
     </Fragment>
   );
 };

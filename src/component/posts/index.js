@@ -28,12 +28,19 @@ const Posts = (props) => {
     const { postData } = props;
     let commetsParams = {
       comments: postData.comments,
+      addComment: postData.addComment,
+    };
+
+    let reactionsParams = {
+      comments: postData.reactions,
+      addComment: postData.setReactions,
     };
 
     return postData.posts.map((post, index) => {
       let postParams = {
         post,
         commetsParams,
+        reactionsParams,
       };
 
       return <Post key={post.id} {...postParams} />;
